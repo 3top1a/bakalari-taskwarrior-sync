@@ -2,6 +2,8 @@ from taskw import TaskWarriorShellout
 import requests
 import getopt
 import sys
+import time
+import datetime
 
 #------- Bakalari
 
@@ -149,7 +151,12 @@ def main():
 			w.task_add(
 				"🏫[{}{}] {}".format("H", homework["ID"], homework["Content"]),
 				priority="H",
-				project="skola"
+				project="skola",
+				due=str(
+					(time.mktime(
+						datetime.datetime.fromisoformat(homework["DateEnd"])
+					.timetuple()))
+				)
 			)
 			# TODO due dates
 
@@ -176,7 +183,7 @@ def is_in_pending(pending, homework, w):
 					r = True
 				except:
 					pass
-	return r
+	return True
 
 
 def task_is_homework(task, homework):
